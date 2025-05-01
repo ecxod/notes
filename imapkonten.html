@@ -7,9 +7,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
     <!-- Eigene Styles -->
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body class="h-100">
- <h1>Imap Konten</h1>   
+    <div class="container-fluid h-100 p-0">
+        <div class="row g-0 text-start h-100">
+
+            <div class="col-3 col-md-2 p-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <ul id="noteList" class="list-group"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-9 col-md-10 p-3 ps-0">
+                <div class="card h-100">
+                    <form>
+                        <div class="card-header">
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <label for="AccountName1" class="form-label">Account Name</label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1"><i class="bi bi-clipboard-plus"></i></span>
+                                        <input type="text" class="form-control" id="AccountName1" placeholder="Notes on example.com">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <label for="server" class="form-label">Server[imap.example.com] : Port[993]</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i class="bi bi-server"></i></span>
+                                <input is="server" type="text" class="form-control" placeholder="imap.example.com:993">
+                            </div>
+                            <label for="InputEmail" class="form-label">User</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i class="bi bi-at"></i></span>
+                                <input is="InputEmail" type="email" class="form-control" aria-describedby="emailHelp" placeholder="user@example.com">
+                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            </div>
+                            <label for="InputPassword1" class="form-label">Password</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i class="bi bi-pass"></i></span>
+                                <input type="password" class="form-control" id="InputPassword1" placeholder="*** long and secret password ***">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
