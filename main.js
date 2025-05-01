@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, ipcMain } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain, globalShortcut } = require('electron');
 const path = require('path');
 
 function createWindow() {
@@ -17,6 +17,14 @@ function createWindow() {
     {
       label: 'File',
       submenu: [
+        {
+          label: 'Imap Konten',
+          accelerator: 'CmdOrCtrl+K', // Tastenkürzel: Ctrl+S (Windows) oder Cmd+S (Mac)
+          click() {
+            // Sende eine Nachricht an den Renderer-Prozess
+            win.loadFile('imapkonten.html');
+          }
+        },
         {
           label: 'Speichern',
           accelerator: 'CmdOrCtrl+S', // Tastenkürzel: Ctrl+S (Windows) oder Cmd+S (Mac)
@@ -94,4 +102,15 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
+});
+
+app.whenReady().then(() => {
+  createWindow();
+  globalShortcut.register('CommandOrControl+S', () => {
+    BrowserWindow.getFocusedWindow()?.webContents.send('save-note');
+  });
+});
+
+app.on('will-quit', () => {
+  globalShortcut.unregisterAll();
 });
