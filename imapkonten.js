@@ -25,17 +25,35 @@ async function saveImapAccount() {
     const server = document.getElementById('ServerData1').value;
     const email = document.getElementById('InputEmail1').value;
     const password = document.getElementById('InputPassword1').value;
-  
+
     const data = { accountName, server, email, password };
     // Erstelle den Ordner, falls er nicht existiert
     await fs.mkdir(imapDir, { recursive: true });
     // Schreibe die Datei
     await fs.writeFile(path.join(__dirname, 'imap_accounts', `account_${Date.now()}.json`), JSON.stringify(data));
     alert('IMAP-Konto gespeichert!');
-  }
+}
 
+async function loadImapAccounts() {
+    const noteList = document.getElementById('noteList');
+    noteList.innerHTML = '';
+    try {
+        const files = await fs.readdir(imapDir);
+        for (const file of files) {
+            const data = JSON.parse(await fs.readFile(path.join(imapDir, file), 'utf8'));
+            const li = document.createElement('li');
+            li.textContent = `${data.accountName} (${data.email})`;
+            noteList.appendChild(li);
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
 
 document.getElementById('imapForm').addEventListener('submit', (e) => {
     e.preventDefault();
     saveImapAccount();
 });
+
+// Beim Laden der Seite aufrufen
+loadImapAccounts();
