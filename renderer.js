@@ -1,6 +1,5 @@
 const fs = require('fs').promises;
 const path = require('path');
-
 const notesDir = path.join(__dirname, 'notes');
 
 async function saveNote() {
@@ -28,7 +27,6 @@ async function loadNotes() {
   }
 }
 
-// Initialisiere das Notizen-Verzeichnis und lade vorhandene Notizen
 async function init() {
   try {
     await fs.mkdir(notesDir, { recursive: true });
@@ -37,6 +35,8 @@ async function init() {
     console.error(err);
   }
 }
+
+
 
 // Verarbeite die IPC-Nachricht vom Hauptprozess
 ipcRenderer.on('save-note', () => {
@@ -49,3 +49,9 @@ ipcRenderer.on('show-about', () => {
 });
 
 init();
+
+// document.querySelector('form').addEventListener('submit', (e) => {
+//   e.preventDefault(); // Verhindert das Standard-Formularverhalten
+//   saveImapAccount();
+// });
+
