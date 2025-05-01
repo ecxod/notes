@@ -38,4 +38,14 @@ async function init() {
   }
 }
 
+// Verarbeite die IPC-Nachricht vom Hauptprozess
+ipcRenderer.on('save-note', () => {
+  saveNote();
+});
+
+// Optional: Zeige ein About-Fenster
+ipcRenderer.on('show-about', () => {
+  alert('Minimal Notes App v1.0\nEntwickelt mit Electron');
+});
+
 init();
