@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('path');
 
 function createWindow() {
@@ -6,12 +6,87 @@ function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true, // Ermöglicht Zugriff auf Node.js im Renderer
-      contextIsolation: false // Vereinfacht für Anfänger
+      nodeIntegration: true,
+      contextIsolation: false
     }
   });
   win.loadFile('index.html');
+
+  // Definiere das Menü
+  const menuTemplate = [
+    {
+      label: 'File',
+      submenu: [
+        {
+          label: 'Speichern',
+          accelerator: 'CmdOrCtrl+S', // Tastenkürzel: Ctrl+S (Windows) oder Cmd+S (Mac)
+          click() {
+            // Sende eine Nachricht an den Renderer-Prozess
+            win.webContents.send('save-note');
+          }
+        },
+        {
+          label: 'Beenden',
+          role: 'quit' // Standardaktion zum Schließen der App
+        }
+      ]
+    },
+    {
+      label: 'Edit',
+      submenu: [
+        { role: 'undo' },
+        { role: 'redo' },
+        { type: 'separator' },
+        { role: 'cut' },
+        { role: 'copy' },
+        { role: 'paste' }
+      ]
+    },
+    {
+      label: 'View',
+      submenu: [
+        { role: 'reload' },
+        { role: 'forceReload' },
+        { role: 'toggleDevTools' },
+        { type: 'separator' },
+        { role: 'resetZoom' },
+        { role: 'zoomIn' },
+        { role: 'zoomOut' },
+        { type: 'separator' },
+        { role: 'togglefullscreen' }
+      ]
+    },
+    {
+      label: 'Window',
+      submenu: [
+        { role: 'minimize' },
+        { role: 'zoom' },
+        { role: 'close' }
+      ]
+    },
+    {
+      label: 'Help',
+      submenu: [
+        {
+          label: 'Über Notes App',
+          click() {
+            // Optional: Zeige ein About-Fenster
+            win.webContents.send('show-about');
+          }
+        }
+      ]
+    }
+  ];
+
+  // Erstelle das Menü aus der Vorlage
+  const menu = Menu.buildFromTemplate(menuTemplate);
+  Menu.setApplicationMenu(menu);
 }
+
+// Verarbeite IPC-Nachrichten vom Renderer (optional, falls du Feedback brauchst)
+ipcMain.on('note-saved', (event, message) => {
+  console.log(message); // z. B. "Notiz gespeichert!"
+});
 
 app.whenReady().then(createWindow);
 
