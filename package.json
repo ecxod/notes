@@ -2,7 +2,7 @@
   "name": "nodejs",
   "version": "1.0.0",
   "description": "https://nodejs.org/download/release/latest-v13.x/",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
@@ -11,6 +11,14 @@
   "license": "ISC",
   "devDependencies": {
     "electron": "^13.6.9"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.5",
+    "sass": "^1.62.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ecxod/notes.git"
   }
 }
-

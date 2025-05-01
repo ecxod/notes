@@ -2,6 +2,9 @@
 <html>
 <head>
   <title>Notes App</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <!-- Eigene Styles -->
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -9,6 +12,8 @@
   <textarea id="noteInput" placeholder="Schreibe deine Notiz..."></textarea>
   <button onclick="saveNote()">Speichern</button>
   <ul id="noteList"></ul>
+  <!-- Bootstrap JavaScript (optional, nur wenn du interaktive Komponenten wie Modals brauchst) -->
+  <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="renderer.js"></script>
 </body>
 </html>
