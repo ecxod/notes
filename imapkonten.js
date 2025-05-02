@@ -1,5 +1,6 @@
 const fs = require('fs').promises;
 const path = require('path');
+const { ipcRenderer } = require('electron');
 const imapDir = path.join(__dirname, 'imap_accounts');
 
 // async function saveImapAccount() {

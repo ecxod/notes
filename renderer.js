@@ -1,5 +1,8 @@
 const fs = require('fs').promises;
 const path = require('path');
+const { ipcRenderer } = require('electron');
+console.log('ipcRenderer geladen:', ipcRenderer);
+console.log('Preload-Pfad:', path.join(__dirname, 'preload.js'));
 const notesDir = path.join(__dirname, 'notes');
 
 async function saveNote() {
@@ -38,15 +41,18 @@ async function init() {
 
 
 
-// Verarbeite die IPC-Nachricht vom Hauptprozess
-ipcRenderer.on('save-note', () => {
+// // Verarbeite die IPC-Nachricht vom Hauptprozess
+// ipcRenderer.on('save-note', () => {
+//   saveNote();
+// });
+window.electronAPI.onSaveNote(() => {
   saveNote();
 });
 
-// Optional: Zeige ein About-Fenster
-ipcRenderer.on('show-about', () => {
-  alert('Minimal Notes App v1.0\nEntwickelt mit Electron');
-});
+// // Optional: Zeige ein About-Fenster
+// ipcRenderer.on('show-about', () => {
+//   alert('Minimal Notes App v1.0\nEntwickelt mit Electron');
+// });
 
 init();
 

@@ -6,8 +6,9 @@ function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false
+      nodeIntegration: false,
+      contextIsolation: true,
+      preload: path.join(__dirname, 'preload.js') // Pfad zum Preload-Skript
     }
   });
   win.loadFile('index.html');
@@ -19,23 +20,21 @@ function createWindow() {
       submenu: [
         {
           label: 'Imap Konten',
-          accelerator: 'CmdOrCtrl+K', // Tastenkürzel: Ctrl+S (Windows) oder Cmd+S (Mac)
+          accelerator: 'CmdOrCtrl+K',
           click() {
-            // Sende eine Nachricht an den Renderer-Prozess
             win.loadFile('imapkonten.html');
           }
         },
         {
           label: 'Speichern',
-          accelerator: 'CmdOrCtrl+S', // Tastenkürzel: Ctrl+S (Windows) oder Cmd+S (Mac)
+          accelerator: 'CmdOrCtrl+S',
           click() {
-            // Sende eine Nachricht an den Renderer-Prozess
             win.webContents.send('save-note');
           }
         },
         {
           label: 'Beenden',
-          role: 'quit' // Standardaktion zum Schließen der App
+          role: 'quit'
         }
       ]
     },
@@ -78,7 +77,6 @@ function createWindow() {
         {
           label: 'Über Notes App',
           click() {
-            // Optional: Zeige ein About-Fenster
             win.webContents.send('show-about');
           }
         }
@@ -86,22 +84,12 @@ function createWindow() {
     }
   ];
 
-  // Erstelle das Menü aus der Vorlage
   const menu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(menu);
 }
 
-// Verarbeite IPC-Nachrichten vom Renderer (optional, falls du Feedback brauchst)
 ipcMain.on('note-saved', (event, message) => {
-  console.log(message); // z. B. "Notiz gespeichert!"
-});
-
-app.whenReady().then(createWindow);
-
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+  console.log(message);
 });
 
 app.whenReady().then(() => {
@@ -111,6 +99,13 @@ app.whenReady().then(() => {
   });
 });
 
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
+
 app.on('will-quit', () => {
   globalShortcut.unregisterAll();
 });
+
