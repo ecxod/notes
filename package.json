@@ -10,7 +10,9 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^13.6.9"
+    "electron": "^13.6.9",
+    "electron-builder": "^22.14.13",
+    "electron-packager": "^13.1.0"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
