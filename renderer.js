@@ -44,12 +44,13 @@ window.electronAPI.onSaveNote(() => {
 });
 
 // Verarbeite die IPC-Nachricht für Theme-Wechsel
-window.Electron.on('toggle-theme', (event, theme) => {
+win.Electron.on('toggle-theme', (event, theme) => {
   document.documentElement.setAttribute('data-bs-theme', theme);
 });
 
 // Optional: Zeige ein About-Fenster
-window.Electron.onShowAbout(() => {
+app.onShowAbout(() => {
+  console.log("aaaa");
   alert('Minimal Notes App v1.0\nEntwickelt mit Electron');
 });
 
