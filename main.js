@@ -60,7 +60,16 @@ function createWindow() {
         { role: 'zoomIn' },
         { role: 'zoomOut' },
         { type: 'separator' },
-        { role: 'togglefullscreen' }
+        { role: 'togglefullscreen' },
+        { 
+          label: 'Dark Mode',
+          type: 'checkbox',
+          checked: false,
+          click(item) {
+            const theme = item.checked ? 'dark' : 'light';
+            win.webContents.send('toggle-theme', theme);
+          }
+        }
       ]
     },
     {
